@@ -10,7 +10,8 @@ const Card = ({ login = "Doctor", Image, link }) => {
   const history = useHistory();
 
   async function loginWithGoogle(e) {
-    console.log(e);
+    console.log(await window.gapi.auth2.getAuthInstance().signIn(),
+    await window.gapi.auth2.getAuthInstance());
     try {
       await window.gapi.auth2.getAuthInstance().signIn();
       const auth2 = await window.gapi.auth2.getAuthInstance();

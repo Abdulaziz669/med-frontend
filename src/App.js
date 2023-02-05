@@ -45,6 +45,7 @@ function App() {
 						clientId: process.env.REACT_APP_CLIENT_ID,
 						discoveryDocs: [process.env.REACT_APP_DISCOVERY_DOCS],
 						scope: process.env.REACT_APP_SCOPE,
+						plugin_name:"My First Project"
 					})
 					.then(
 						function () {
