@@ -16,7 +16,6 @@ const Card = ({ login = "Doctor", Image, link }) => {
       await window.gapi.auth2.getAuthInstance().signIn();
       const auth2 = await window.gapi.auth2.getAuthInstance();
 
-       console.log(auth2, "Satte")
       if (auth2.isSignedIn.get()) {
         console.log("[Google] Signed in successfully!");
         var profile = auth2.currentUser.get();
