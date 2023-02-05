@@ -36,7 +36,7 @@ function App() {
 	// To load only when gapi is loaded
 	useEffect(() => {
 
-		window.g
+		console.log(window.google);
 		if (window.gapi !== undefined) {
 			setApiLoaded(false);
 			window.gapi.load("client:auth2", initClient);
