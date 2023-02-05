@@ -54,33 +54,27 @@ const Navbar = () => {
   function signOutGoogle() {
     // Different logic for doctor and patient
 
-    console.log("[Google] Signed out successfully!");
-    window.localStorage.removeItem("token");
-    window.localStorage.removeItem("googleId");
-    setToken(null);
-    setGoogleId(null);
-
     // Patient logic
-    // if (window.gapi.auth2.getAuthInstance().isSignedIn.get()) {
-    //   window.gapi.auth2.getAuthInstance().signOut().then(() => {
-    //     console.log("[Google] Signed out successfully!");
-    //     window.localStorage.removeItem("token");
-    //     window.localStorage.removeItem("googleId");
-    //     setToken(null);
-    //     setGoogleId(null);
-    //     history.push("/");
-    //   }).catch((err) => {
-    //     console.log(`[Google] Some error occurred while signing out! ${err}`);
-    //   });
-    // }
+    if (window.gapi.auth2.getAuthInstance().isSignedIn.get()) {
+      window.gapi.auth2.getAuthInstance().signOut().then(() => {
+        console.log("[Google] Signed out successfully!");
+        window.localStorage.removeItem("token");
+        window.localStorage.removeItem("googleId");
+        setToken(null);
+        setGoogleId(null);
+        history.push("/");
+      }).catch((err) => {
+        console.log(`[Google] Some error occurred while signing out! ${err}`);
+      });
+    }
 
     // Doctor logic
-    // else {
-    //   window.localStorage.removeItem("token");
-    //   console.log("[Doctor] Signed out successfully!");
-    //   setToken(null);
-    //   history.push("/");
-    // }
+    else {
+      window.localStorage.removeItem("token");
+      console.log("[Doctor] Signed out successfully!");
+      setToken(null);
+      history.push("/");
+    }
   }
 
   return (
