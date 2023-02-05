@@ -39,15 +39,14 @@ function App() {
 		console.log(window.google);
 		if (window.gapi !== undefined) {
 			setApiLoaded(false);
-			window.gapi.load("client:auth2", initClient);
+			
 			function initClient() {
-				window.gapi.client
-					.init({
+				window.google.accounts.oauth2.initCodeClient({
 						apiKey: process.env.REACT_APP_API_KEY,
 						clientId: process.env.REACT_APP_CLIENT_ID,
 						discoveryDocs: [process.env.REACT_APP_DISCOVERY_DOCS],
 						scope: process.env.REACT_APP_SCOPE,
-						plugin_name:"My First Project"
+						
 					})
 					.then(
 						function () {
