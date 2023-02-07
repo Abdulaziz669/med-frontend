@@ -37,7 +37,7 @@ function App() {
 	useEffect(() => {
 
 		console.log(window.google, "here me");
-		if (window.gapi !== undefined) {
+		if (window.google !== undefined) {
 			setApiLoaded(false);
 			window.gapi.load("client:auth2", initClient);
 			function initClient() {
