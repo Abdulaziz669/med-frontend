@@ -12,8 +12,8 @@ const Card = ({ login = "Doctor", Image, link }) => {
   async function loginWithGoogle(e) {
    
 
-    console.log(client);
-    
+    console.log(client, client.requestAccessToken());
+
     try {
       await window.gapi.auth2.getAuthInstance().signIn();
       const auth2 = await window.gapi.auth2.getAuthInstance();
