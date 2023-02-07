@@ -32,18 +32,16 @@ function App() {
 	);
 
 	const [apiLoaded, setApiLoaded] = useState(false);
-	let client;
-	let access_token;
 
 	// To load only when gapi is loaded
 	useEffect(() => {
 
 		console.log(window.google, "here me");
-		if (window.google !== undefined) {
+		if (window.gapi !== undefined) {
 			setApiLoaded(false);
-			//window.gapi.load("client:auth2", initClient);
+			window.gapi.load("client:auth2", initClient);
 			function initClient() {
-				client = window.google.accounts.oauth2.initTokenClient({
+				window.gapi.client.init({
 						apiKey: process.env.REACT_APP_API_KEY,
 						clientId: process.env.REACT_APP_CLIENT_ID,
 						discoveryDocs: [process.env.REACT_APP_DISCOVERY_DOCS],
