@@ -20,6 +20,11 @@ const Card = ({ login = "Doctor", Image, link }) => {
 
       console.log(accessToken.code, client, "client-code");
 
+      client.callback = (response) =>{
+        console.log(response, "callback");
+      }
+
+      console.log("Waiting");
       if (client && accessToken.code) {
         console.log("[Google] Signed in successfully!");
         window.localStorage.setItem("token", token);
