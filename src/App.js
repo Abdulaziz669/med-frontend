@@ -87,8 +87,6 @@ function App() {
 			setApiLoaded(false);
 		}
 
-		initClient()
-
 	}, []);
 
 	return apiLoaded ? (
