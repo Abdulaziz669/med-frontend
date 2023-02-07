@@ -51,10 +51,14 @@ function App() {
 						discovery_docs: [process.env.REACT_APP_DISCOVERY_DOCS],
 						scope: process.env.REACT_APP_SCOPE,
 						callback: (tokenResponse) => {
+
+							console.log("access", tokenResponse);
 						setAccessToken(tokenResponse.access_token);
 						},
 						
 					})
+
+					console.log(result, "result");
 				setClient(result);
 					// .then(
 					// 	function () {
