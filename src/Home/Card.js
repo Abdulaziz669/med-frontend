@@ -11,7 +11,7 @@ const Card = ({ login = "Doctor", Image, link }) => {
 
   async function loginWithGoogle(e) {
     
-    client.callback()
+    
 
     console.log(client, "respost", accessToken);
 
