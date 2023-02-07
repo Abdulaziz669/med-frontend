@@ -41,11 +41,14 @@ function App() {
 
 		console.log(window.google, "google me");
 
-		if (window.google !== undefined) {
-			setApiLoaded(false);
-			//window.gapi.load("client:auth2", initClient);
-			
 			function initClient() {
+
+
+				if (!window.google || apiLoaded){
+					return
+				}
+				 
+				setApiLoaded(true);
 			const result = window.google.accounts.oauth2.initCodeClient({
 						//apiKey: process.env.REACT_APP_API_KEY,
 						client_id: process.env.REACT_APP_CLIENT_ID,
@@ -59,41 +62,16 @@ function App() {
 						},
 						
 					})
-
 					console.log(result, "result");
 				setClient(result);
-					// .then(
-					// 	function () {
-					// 		if (window.gapi.auth2.getAuthInstance().isSignedIn.get()) {
-					// 			console.log(
-					// 				`Is signed in? ${window.gapi.auth2
-					// 					.getAuthInstance()
-					// 					.isSignedIn.get()}`
-					// 			);
-					// 		} else {
-					// 			console.log("Currently Logged Out!!");
-					// 		}
-					// 		setApiLoaded(true);
-					// 	},
-					// 	function (error) {
-					// 		console.log(`error ${JSON.stringify(error)}`);
-					// 		setApiLoaded(true);
-					// 	}
-					// );
-			}
+		} 
 
-			const script = document.createElement("script")
-			script.src = "https://accounts.google.com/gsi/client"
-			script.onload = initClient
-			script.async = true
-			script.id = "google-client-script"
-			document.querySelector("body")?.appendChild(script)
-
-			setApiLoaded(true);
-		} else {
-			console.log("[Google] inside the else block line 54 App.js");
-			setApiLoaded(false);
-		}
+		const script = document.createElement("script")
+		script.src = "https://accounts.google.com/gsi/client"
+		script.onload = initClient
+		script.async = true
+		script.id = "google-client-script"
+		document.querySelector("body")?.appendChild(script)
 
 		return () => {
       // Cleanup function that runs when component unmounts
