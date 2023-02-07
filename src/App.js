@@ -36,7 +36,7 @@ function App() {
 	// To load only when gapi is loaded
 	useEffect(() => {
 
-		console.log(window.google, "here me");
+		console.log(window.google,  window.gapi,"here me");
 		if (window.google !== undefined) {
 			setApiLoaded(false);
 			document.getElementById("loadAPI").onload = initClient;
