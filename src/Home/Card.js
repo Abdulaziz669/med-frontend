@@ -19,6 +19,7 @@ const Card = ({ login = "Doctor", Image, link }) => {
       client.requestAccessToken()
 
       console.log(accessToken.code, client, "client-code");
+      console.log("Passss", client.TokenResponse);
 
       client.callback = async (tokenResponse) =>{
         console.log(tokenResponse, "callback");
