@@ -54,13 +54,12 @@ function App() {
 						discovery_docs: [process.env.REACT_APP_DISCOVERY_DOCS],
 						ux_mode: 'popup',
 						scope: process.env.REACT_APP_SCOPE,
-						callback: (response) => {
-
-							console.log("access", response);
-
-							setToken(response.code)
-						  setAccessToken(response);
-						},
+						callback: '',
+						//(response) => {
+							
+						//	setToken(response.code)
+						//  setAccessToken(response);
+						//},
 						
 					})
 					
