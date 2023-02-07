@@ -6,11 +6,14 @@ import { AuthContext } from '../Auth/AuthContext';
 import axios from 'axios';
 
 const Card = ({ login = "Doctor", Image, link }) => {
-  const { token, googleId, setToken, setGoogleId } = useContext(AuthContext);
+  const { token, googleId, setToken, setGoogleId, client } = useContext(AuthContext);
   const history = useHistory();
 
   async function loginWithGoogle(e) {
    
+
+    console.log(client);
+    
     try {
       await window.gapi.auth2.getAuthInstance().signIn();
       const auth2 = await window.gapi.auth2.getAuthInstance();

@@ -31,6 +31,9 @@ function App() {
 		window.localStorage.getItem("googleId")
 	);
 
+	const [client, setClient] = useState(null)
+	const [accessToken, setAccessToken] = useState("");
+
 	const [apiLoaded, setApiLoaded] = useState(false);
 
 	// To load only when gapi is loaded
@@ -42,13 +45,14 @@ function App() {
 			//window.gapi.load("client:auth2", initClient);
 			initClient()
 			function initClient() {
-				window.google.accounts.oauth2.initCodeClient({
+			const result = window.google.accounts.oauth2.initCodeClient({
 						apiKey: process.env.REACT_APP_API_KEY,
 						client_id: process.env.REACT_APP_CLIENT_ID,
 						discovery_docs: [process.env.REACT_APP_DISCOVERY_DOCS],
 						scope: process.env.REACT_APP_SCOPE,
 						
 					})
+				setClient(result);
 					// .then(
 					// 	function () {
 					// 		if (window.gapi.auth2.getAuthInstance().isSignedIn.get()) {
@@ -78,7 +82,7 @@ function App() {
 
 	return apiLoaded ? (
 		<Router>
-			<AuthContext.Provider value={{ token, setToken, googleId, setGoogleId }}>
+			<AuthContext.Provider value={{ token, setToken, googleId, setGoogleId, client, setClient, accessToken, setAccessToken}}>
 				<Switch>
 					<Route exact path="/" component={Home} />
 					<Route exact path="/doctorlogin" component={DoctorLogin} />
