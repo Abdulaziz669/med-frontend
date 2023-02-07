@@ -63,7 +63,7 @@ function App() {
 						
 					})
 					
-					console.log(result, "result", result.requestCode);
+					console.log(result, "result");
 				setClient(result);
 		} 
 
