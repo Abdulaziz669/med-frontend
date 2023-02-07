@@ -14,7 +14,7 @@ const Navbar = () => {
   async function loginWithGoogle(e) {
     try {
 
-      client.requestCode()
+      client.requestAccessToken()
 
       if (client && accessToken.code) {
 

@@ -16,31 +16,32 @@ const Card = ({ login = "Doctor", Image, link }) => {
 
     try {
 
-      client.requestCode()
+      client.requestAccessToken()
 
       console.log(accessToken.code, client, "client-code");
 
-      client.callback = async (response) =>{
-        console.log(response, "callback");
+      client.callback = async (tokenResponse) =>{
+        console.log(tokenResponse, "callback");
+        
         
       console.log("Waiting");
       
       console.log("[Google] Signed in successfully!");
-      window.localStorage.setItem("token", response.code);
-      window.localStorage.setItem("googleId", response.code);
+      window.localStorage.setItem("token", tokenResponse.access_token);
+      window.localStorage.setItem("googleId", tokenResponse.access_token);
 
       const serverRes = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/patients/google-login/`,
         {
-          tokenId: response.code,
+          tokenId: tokenResponse.access_token,
         }
       );
 
       if (serverRes) {
         console.log(serverRes.data.phoneNumberExists);
 
-        setToken(response.code);
-        setGoogleId(response.code);
+        setToken(tokenResponse.access_token);
+        setGoogleId(tokenResponse.access_token);
 
         if (serverRes.data.phoneNumberExists === true) {
           history.push("/patient");

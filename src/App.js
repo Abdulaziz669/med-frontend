@@ -48,7 +48,7 @@ function App() {
 				}
 				 
 				setApiLoaded(true);
-			const result = window.google.accounts.oauth2.initCodeClient({
+			const result = window.google.accounts.oauth2.initTokenClient({
 						//apiKey: process.env.REACT_APP_API_KEY,
 						client_id: process.env.REACT_APP_CLIENT_ID,
 						discovery_docs: [process.env.REACT_APP_DISCOVERY_DOCS],
