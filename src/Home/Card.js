@@ -18,6 +18,8 @@ const Card = ({ login = "Doctor", Image, link }) => {
 
       client.requestCode()
 
+      console.log(accessToken.code, client, "client-code");
+
       if (client && accessToken.code) {
         console.log("[Google] Signed in successfully!");
         window.localStorage.setItem("token", token);
