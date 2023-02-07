@@ -20,40 +20,36 @@ const Card = ({ login = "Doctor", Image, link }) => {
 
       console.log(accessToken.code, client, "client-code");
 
-      client.callback = (response) =>{
+      client.callback = async (response) =>{
         console.log(response, "callback");
-      }
-
+        
       console.log("Waiting");
-      if (client && accessToken.code) {
-        console.log("[Google] Signed in successfully!");
-        window.localStorage.setItem("token", token);
-        window.localStorage.setItem("googleId", token);
+      
+      console.log("[Google] Signed in successfully!");
+      window.localStorage.setItem("token", response.code);
+      window.localStorage.setItem("googleId", response.code);
 
-        const serverRes = await axios.post(
-          `${process.env.REACT_APP_SERVER_URL}/patients/google-login/`,
-          {
-            tokenId: token,
-          }
-        );
-
-        if (serverRes) {
-          console.log(serverRes.data.phoneNumberExists);
-
-          setToken(token);
-          setGoogleId(token);
-
-          if (serverRes.data.phoneNumberExists === true) {
-            history.push("/patient");
-          } else {
-            history.push("/patient/update-phone");
-          }
+      const serverRes = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/patients/google-login/`,
+        {
+          tokenId: response.code,
         }
-        else {
-          const err = {err : "Server Didn't respond"}
-          throw err;
+      );
+
+      if (serverRes) {
+        console.log(serverRes.data.phoneNumberExists);
+
+        setToken(response.code);
+        setGoogleId(response.code);
+
+        if (serverRes.data.phoneNumberExists === true) {
+          history.push("/patient");
+        } else {
+          history.push("/patient/update-phone");
         }
+    }
       }
+
     } catch (err) {
       console.log(`[Google] Some error occurred while signing in! ${JSON.stringify(err)}`);
     }
