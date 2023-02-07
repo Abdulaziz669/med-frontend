@@ -50,6 +50,9 @@ function App() {
 						client_id: process.env.REACT_APP_CLIENT_ID,
 						discovery_docs: [process.env.REACT_APP_DISCOVERY_DOCS],
 						scope: process.env.REACT_APP_SCOPE,
+						callback: (tokenResponse) => {
+						setAccessToken(tokenResponse.access_token);
+						},
 						
 					})
 				setClient(result);
