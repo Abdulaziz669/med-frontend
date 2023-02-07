@@ -49,24 +49,24 @@ function App() {
 						scope: process.env.REACT_APP_SCOPE,
 						
 					})
-					.then(
-						function () {
-							if (window.gapi.auth2.getAuthInstance().isSignedIn.get()) {
-								console.log(
-									`Is signed in? ${window.gapi.auth2
-										.getAuthInstance()
-										.isSignedIn.get()}`
-								);
-							} else {
-								console.log("Currently Logged Out!!");
-							}
-							setApiLoaded(true);
-						},
-						function (error) {
-							console.log(`error ${JSON.stringify(error)}`);
-							setApiLoaded(true);
-						}
-					);
+					// .then(
+					// 	function () {
+					// 		if (window.gapi.auth2.getAuthInstance().isSignedIn.get()) {
+					// 			console.log(
+					// 				`Is signed in? ${window.gapi.auth2
+					// 					.getAuthInstance()
+					// 					.isSignedIn.get()}`
+					// 			);
+					// 		} else {
+					// 			console.log("Currently Logged Out!!");
+					// 		}
+					// 		setApiLoaded(true);
+					// 	},
+					// 	function (error) {
+					// 		console.log(`error ${JSON.stringify(error)}`);
+					// 		setApiLoaded(true);
+					// 	}
+					// );
 			}
 			setApiLoaded(true);
 		} else {
