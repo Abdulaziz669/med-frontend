@@ -48,20 +48,20 @@ function App() {
 				}
 				 
 				setApiLoaded(true);
-			const result = window.google.accounts.oauth2.initTokenClient({
+			const result = window.google.accounts.id.initialize({
 						//apiKey: process.env.REACT_APP_API_KEY,
 						client_id: process.env.REACT_APP_CLIENT_ID,
 						discovery_docs: [process.env.REACT_APP_DISCOVERY_DOCS],
 						ux_mode: 'popup',
 						scope: process.env.REACT_APP_SCOPE,
-						callback: '',
-						//(response) => {
+						callback:(response) => {
 							
-						//	setToken(response.code)
-						//  setAccessToken(response);
-						//},
+							setToken(response.code)
+						  setAccessToken(response);
+						},
 						
 					})
+					window.google.accounts.id.prompt();
 					
 					console.log(result, "result");
 				setClient(result);
