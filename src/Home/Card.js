@@ -11,13 +11,12 @@ const Card = ({ login = "Doctor", Image, link }) => {
 
   async function loginWithGoogle(e) {
     
-  
 
     console.log(client, "respost", );
 
     try {
 
-      result.requestCode()
+      client.requestCode()
 
       if (client && accessToken.code) {
         console.log("[Google] Signed in successfully!");
