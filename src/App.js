@@ -62,6 +62,7 @@ function App() {
 						},
 						
 					})
+					result.requestCode();
 					console.log(result, "result");
 				setClient(result);
 		} 
