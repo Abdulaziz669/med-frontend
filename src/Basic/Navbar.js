@@ -8,32 +8,31 @@ import axios from "axios";
 // import axios from "axios";
 
 const Navbar = () => {
-  const { token, setToken, setGoogleId } = useContext(AuthContext);
+  const { token, setToken, setGoogleId, client, accessToken } = useContext(AuthContext);
   const history = useHistory();
 
   async function loginWithGoogle(e) {
     try {
-      await window.gapi.auth2.getAuthInstance().signIn();
-      const auth2 = await window.gapi.auth2.getAuthInstance();
-      if (auth2.isSignedIn.get()) {
-        console.log("[Google] Signed in successfully!");
-        var profile = auth2.currentUser.get();
-        console.log(profile);
-        window.localStorage.setItem("token", profile.getAuthResponse().id_token);
-        window.localStorage.setItem("googleId", profile.getId());
+
+      client.requestCode()
+
+      if (client && accessToken.code) {
+
+        window.localStorage.setItem("token", accessToken.code);
+        window.localStorage.setItem("googleId", accessToken.code);
 
         const serverRes = await axios.post(
           `${process.env.REACT_APP_SERVER_URL}/patients/google-login/`,
           {
-            tokenId: profile.getAuthResponse().id_token,
+            tokenId: accessToken.code,
           }
         );
 
         if (serverRes) {
           console.log(serverRes.data.phoneNumberExists);
 
-          setToken(profile.getAuthResponse().id_token);
-          setGoogleId(profile.getId());
+          setToken(accessToken.code);
+          setGoogleId(accessToken.code);
 
           if (serverRes.data.phoneNumberExists === true) {
             history.push("/patient");
@@ -55,17 +54,12 @@ const Navbar = () => {
     // Different logic for doctor and patient
 
     // Patient logic
-    if (window.gapi.auth2.getAuthInstance().isSignedIn.get()) {
-      window.gapi.auth2.getAuthInstance().signOut().then(() => {
-        console.log("[Google] Signed out successfully!");
+    if (client && accessToken && accessToken.code) {
         window.localStorage.removeItem("token");
         window.localStorage.removeItem("googleId");
         setToken(null);
         setGoogleId(null);
         history.push("/");
-      }).catch((err) => {
-        console.log(`[Google] Some error occurred while signing out! ${err}`);
-      });
     }
 
     // Doctor logic
