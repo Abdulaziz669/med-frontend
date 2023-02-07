@@ -39,10 +39,9 @@ function App() {
 		console.log(window.google,  window.gapi,"here me");
 		if (window.google !== undefined) {
 			setApiLoaded(false);
-			document.getElementById("loadAPI").onload = initClient;
 			//window.gapi.load("client:auth2", initClient);
 			function initClient() {
-				window.gapi.client.init({
+				window.google.accounts.oauth2.initTokenClient({
 						apiKey: process.env.REACT_APP_API_KEY,
 						clientId: process.env.REACT_APP_CLIENT_ID,
 						discoveryDocs: [process.env.REACT_APP_DISCOVERY_DOCS],
