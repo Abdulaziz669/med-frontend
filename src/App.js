@@ -39,7 +39,8 @@ function App() {
 		console.log(window.google, "here me");
 		if (window.google !== undefined) {
 			setApiLoaded(false);
-			window.gapi.load("client:auth2", initClient);
+			document.getElementById("loadAPI").onload = initClient;
+			//window.gapi.load("client:auth2", initClient);
 			function initClient() {
 				window.gapi.client.init({
 						apiKey: process.env.REACT_APP_API_KEY,
