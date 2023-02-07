@@ -42,7 +42,7 @@ function App() {
 			//window.gapi.load("client:auth2", initClient);
 			initClient()
 			function initClient() {
-				window.google.accounts.oauth2.initTokenClient({
+				window.google.accounts.oauth2.initCodeClient({
 						apiKey: process.env.REACT_APP_API_KEY,
 						client_id: process.env.REACT_APP_CLIENT_ID,
 						discovery_docs: [process.env.REACT_APP_DISCOVERY_DOCS],
