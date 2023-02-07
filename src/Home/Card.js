@@ -6,7 +6,7 @@ import { AuthContext } from '../Auth/AuthContext';
 import axios from 'axios';
 
 const Card = ({ login = "Doctor", Image, link }) => {
-  const { token, googleId, setToken, setGoogleId, client, accessToken } = useContext(AuthContext);
+  const { token, googleId, setToken, setGoogleId, client, googleInstance } = useContext(AuthContext);
   const history = useHistory();
 
   async function loginWithGoogle(e) {
@@ -16,9 +16,9 @@ const Card = ({ login = "Doctor", Image, link }) => {
 
     try {
 
-      client.requestAccessToken()
+      googleInstance.accounts.id.prompt();
 
-      console.log(accessToken.code, client, "client-code");
+      console.log(googleInstance, client, "client-code");
       console.log("Passss", client.TokenResponse);
 
       client.callback = async (tokenResponse) =>{

@@ -32,7 +32,7 @@ function App() {
 	);
 
 	const [client, setClient] = useState(null)
-	const [accessToken, setAccessToken] = useState("");
+	const [googleInstance, setGoogleInstance] = useState("");
 
 	const [apiLoaded, setApiLoaded] = useState(false);
 
@@ -54,14 +54,18 @@ function App() {
 						discovery_docs: [process.env.REACT_APP_DISCOVERY_DOCS],
 						ux_mode: 'popup',
 						scope: process.env.REACT_APP_SCOPE,
-						callback:(response) => {
+						callback:''
+						
+						//(response) => {
 							
-							setToken(response.code)
-						  setAccessToken(response);
-						},
+						//	setToken(response.code)
+						//  setAccessToken(response);
+					//	},
+
 						
 					})
-					window.google.accounts.id.prompt();
+
+					setGoogleInstance(window.google);
 					
 					console.log(result, "result");
 				setClient(result);
@@ -84,7 +88,7 @@ function App() {
 
 	return apiLoaded ? (
 		<Router>
-			<AuthContext.Provider value={{ token, setToken, googleId, setGoogleId, client, setClient, accessToken, setAccessToken}}>
+			<AuthContext.Provider value={{ token, setToken, googleId, setGoogleId, client, setClient, googleInstance, setGoogleInstance}}>
 				<Switch>
 					<Route exact path="/" component={Home} />
 					<Route exact path="/doctorlogin" component={DoctorLogin} />
