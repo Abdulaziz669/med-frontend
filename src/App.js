@@ -43,7 +43,7 @@ function App() {
 		if (window.google !== undefined) {
 			setApiLoaded(false);
 			//window.gapi.load("client:auth2", initClient);
-			initClient()
+			
 			function initClient() {
 			const result = window.google.accounts.oauth2.initTokenClient({
 						apiKey: process.env.REACT_APP_API_KEY,
@@ -79,11 +79,15 @@ function App() {
 					// 	}
 					// );
 			}
+
+			initClient()
 			setApiLoaded(true);
 		} else {
 			console.log("[Google] inside the else block line 54 App.js");
 			setApiLoaded(false);
 		}
+
+		initClient()
 
 	}, []);
 

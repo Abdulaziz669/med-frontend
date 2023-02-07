@@ -10,7 +10,9 @@ const Card = ({ login = "Doctor", Image, link }) => {
   const history = useHistory();
 
   async function loginWithGoogle(e) {
-   
+    
+    client.callback()
+
     console.log(client, "respost", accessToken);
 
     try {
