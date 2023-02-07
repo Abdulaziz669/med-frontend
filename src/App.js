@@ -62,8 +62,8 @@ function App() {
 						},
 						
 					})
-					result.requestCode();
-					console.log(result, "result");
+					
+					console.log(result, "result", result.requestCode);
 				setClient(result);
 		} 
 
