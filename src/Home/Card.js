@@ -13,31 +13,29 @@ const Card = ({ login = "Doctor", Image, link }) => {
     
   
 
-    console.log(client, "respost", result.requestCode);
+    console.log(client, "respost", );
 
     try {
-      await window.gapi.auth2.getAuthInstance().signIn();
-      const auth2 = await window.gapi.auth2.getAuthInstance();
 
-      if (auth2.isSignedIn.get()) {
+      result.requestCode()
+
+      if (client && accessToken.code) {
         console.log("[Google] Signed in successfully!");
-        var profile = auth2.currentUser.get();
-        console.log(profile);
-        window.localStorage.setItem("token", profile.getAuthResponse().id_token);
-        window.localStorage.setItem("googleId", profile.getId());
+        window.localStorage.setItem("token", token);
+        window.localStorage.setItem("googleId", token);
 
         const serverRes = await axios.post(
           `${process.env.REACT_APP_SERVER_URL}/patients/google-login/`,
           {
-            tokenId: profile.getAuthResponse().id_token,
+            tokenId: token,
           }
         );
 
         if (serverRes) {
           console.log(serverRes.data.phoneNumberExists);
 
-          setToken(profile.getAuthResponse().id_token);
-          setGoogleId(profile.getId());
+          setToken(token);
+          setGoogleId(token);
 
           if (serverRes.data.phoneNumberExists === true) {
             history.push("/patient");

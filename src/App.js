@@ -43,7 +43,6 @@ function App() {
 
 			function initClient() {
 
-
 				if (!window.google || apiLoaded){
 					return
 				}
@@ -58,7 +57,9 @@ function App() {
 						callback: (response) => {
 
 							console.log("access", response);
-						setAccessToken(response.code);
+
+							setToken(response.code)
+						  setAccessToken(response);
 						},
 						
 					})
