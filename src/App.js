@@ -44,8 +44,8 @@ function App() {
 			function initClient() {
 				window.google.accounts.oauth2.initTokenClient({
 						apiKey: process.env.REACT_APP_API_KEY,
-						clientId: process.env.REACT_APP_CLIENT_ID,
-						discoveryDocs: [process.env.REACT_APP_DISCOVERY_DOCS],
+						client_id: process.env.REACT_APP_CLIENT_ID,
+						discovery_docs: [process.env.REACT_APP_DISCOVERY_DOCS],
 						scope: process.env.REACT_APP_SCOPE,
 						
 					})
