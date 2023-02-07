@@ -39,7 +39,8 @@ function App() {
 	// To load only when gapi is loaded
 	useEffect(() => {
 
-		console.log(window.google,  window.gapi,"here me");
+		console.log(window.google, "google me");
+
 		if (window.google !== undefined) {
 			setApiLoaded(false);
 			//window.gapi.load("client:auth2", initClient);
@@ -81,13 +82,25 @@ function App() {
 					// );
 			}
 
-			initClient()
+			const script = document.createElement("script")
+			script.src = "https://accounts.google.com/gsi/client"
+			script.onload = initClient
+			script.async = true
+			script.id = "google-client-script"
+			document.querySelector("body")?.appendChild(script)
+
 			setApiLoaded(true);
 		} else {
 			console.log("[Google] inside the else block line 54 App.js");
 			setApiLoaded(false);
 		}
 
+		return () => {
+      // Cleanup function that runs when component unmounts
+      window.google?.accounts.id.cancel()
+      document.getElementById("google-client-script")?.remove()
+    }
+	
 	}, []);
 
 	return apiLoaded ? (
