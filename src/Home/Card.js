@@ -28,21 +28,21 @@ const Card = ({ login = "Doctor", Image, link }) => {
       console.log("Waiting");
       
       console.log("[Google] Signed in successfully!");
-      window.localStorage.setItem("token", tokenResponse.access_token);
-      window.localStorage.setItem("googleId", tokenResponse.access_token);
+      window.localStorage.setItem("token", tokenResponse.credential);
+      window.localStorage.setItem("googleId", tokenResponse.credential);
 
       const serverRes = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/patients/google-login/`,
         {
-          tokenId: tokenResponse.access_token,
+          tokenId: tokenResponse.credential,
         }
       );
 
       if (serverRes) {
         console.log(serverRes.data.phoneNumberExists);
 
-        setToken(tokenResponse.access_token);
-        setGoogleId(tokenResponse.access_token);
+        setToken(tokenResponse.credential);
+        setGoogleId(tokenResponse.credential);
 
         if (serverRes.data.phoneNumberExists === true) {
           history.push("/patient");

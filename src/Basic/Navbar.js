@@ -8,43 +8,45 @@ import axios from "axios";
 // import axios from "axios";
 
 const Navbar = () => {
-  const { token, setToken, setGoogleId, client, accessToken } = useContext(AuthContext);
+  const { token, setToken, setGoogleId, client, googleInstance } = useContext(AuthContext);
   const history = useHistory();
 
   async function loginWithGoogle(e) {
+    
+
     try {
 
-      client.requestAccessToken()
+      googleInstance.accounts.id.prompt();
 
-      if (client && accessToken.code) {
+      client.callback = async (tokenResponse) =>{
+        console.log(tokenResponse, "callback");
+        
+      
+      console.log("[Google] Signed in successfully!");
+      window.localStorage.setItem("token", tokenResponse.credential);
+      window.localStorage.setItem("googleId", tokenResponse.credential);
 
-        window.localStorage.setItem("token", accessToken.code);
-        window.localStorage.setItem("googleId", accessToken.code);
-
-        const serverRes = await axios.post(
-          `${process.env.REACT_APP_SERVER_URL}/patients/google-login/`,
-          {
-            tokenId: accessToken.code,
-          }
-        );
-
-        if (serverRes) {
-          console.log(serverRes.data.phoneNumberExists);
-
-          setToken(accessToken.code);
-          setGoogleId(accessToken.code);
-
-          if (serverRes.data.phoneNumberExists === true) {
-            history.push("/patient");
-          } else {
-            history.push("/patient/update-phone");
-          }
+      const serverRes = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/patients/google-login/`,
+        {
+          tokenId: tokenResponse.credential,
         }
-        else {
-          const err = {err : "Server Didn't respond"}
-          throw err;
+      );
+
+      if (serverRes) {
+        console.log(serverRes.data.phoneNumberExists);
+
+        setToken(tokenResponse.credential);
+        setGoogleId(tokenResponse.credential);
+
+        if (serverRes.data.phoneNumberExists === true) {
+          history.push("/patient");
+        } else {
+          history.push("/patient/update-phone");
         }
+    }
       }
+
     } catch (err) {
       console.log(`[Google] Some error occurred while signing in! ${JSON.stringify(err)}`);
     }
@@ -52,23 +54,11 @@ const Navbar = () => {
 
   function signOutGoogle() {
     // Different logic for doctor and patient
-
-    // Patient logic
-    if (client && accessToken && accessToken.code) {
         window.localStorage.removeItem("token");
         window.localStorage.removeItem("googleId");
         setToken(null);
         setGoogleId(null);
         history.push("/");
-    }
-
-    // Doctor logic
-    else {
-      window.localStorage.removeItem("token");
-      console.log("[Doctor] Signed out successfully!");
-      setToken(null);
-      history.push("/");
-    }
   }
 
   return (
